@@ -1,4 +1,5 @@
 @prefix : <http://modellingdh.github.io/ont/odp/term/> .
+@prefix cp: <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl#> .
 @prefix dc: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix provo: <http://www.w3.org/ns/prov#> .
@@ -6,8 +7,64 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix activ: <http://ontology.eil.utoronto.ca/icity/ActivitySpecification/> .
 @base <http://modellingdh.github.io/ont/odp/term/> .
 
 <http://modellingdh.github.io/ont/odp/experience> a owl:Ontology
-	; owl:imports <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl>
+    ; owl:versionIRI <https://raw.githubusercontent.com/modellingDH/odp_experience/master/owl/cp_experience.owl.ttl>
+    ; owl:imports <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl>
+    ; dc:title "Experience from observation"@en
+    ; dc:creator <https://orcid.org/0000-0002-3639-3622> 
+        , <https://orcid.org/0000-0002-9272-908X>
+        , <https://orcid.org/0000-0003-3807-5019>
+    ; cp:relatedCPs <http://www.ontologydesignpatterns.org/cp/owl/observation.owl>
+        , <http://www.ontologydesignpatterns.org/cp/owl/persons.owl>
+        , <http://ontology.eil.utoronto.ca/icity/ActivitySpecification>
 .
+
+:includes a owl:ObjectProperty
+    ; rdfs:label "includes"@en
+    ; rdfs:domain activ:Activity
+    ; rdfs:range :Observation
+.
+
+:produces a owl:ObjectProperty
+    ; rdfs:label "produces"@en
+    ; rdfs:domain :Prompt
+    ; rdfs:range :Observation
+.
+
+:stateOf a owl:ObjectProperty
+    ; rdfs:label "state of"@en
+    ; rdfs:comment "See if another CP offers an agreeable property for state (situation?)"@en
+.
+
+:stimulates a owl:ObjectProperty
+    ; rdfs:label "stimulates"@en
+    ; rdfs:domain :Observation
+    ; rdfs:range :Engagement
+.
+
+:Engagement a owl:Class
+    ; rdfs:label "Engagement"@en
+    ; rdfs:subClassOf [
+        a owl:Restriction
+        ; owl:onProperty :stateOf
+        ; owl:someValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person>
+    ] , [
+        a owl:Restriction
+        ; owl:onProperty :stateOf
+        ; owl:someValuesFrom activ:Activity
+    ]
+.
+
+:Observation a owl:Class
+    ; rdfs:label "Observation"@en
+    ; rdfs:comment "Not necessarily the same observation as in the Observation CP."@en
+.
+
+:Prompt a owl:Class
+    ; rdfs:label "Prompt"@en
+    ; rdfs:subClassOf activ:Activity
+.
+
