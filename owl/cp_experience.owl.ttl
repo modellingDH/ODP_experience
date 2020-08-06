@@ -2,69 +2,104 @@
 @prefix cp: <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl#> .
 @prefix dc: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix provo: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix activ: <http://ontology.eil.utoronto.ca/icity/ActivitySpecification/> .
-@base <http://modellingdh.github.io/ont/odp/term/> .
+@prefix provo: <http://www.w3.org/ns/prov#> .
+@base <http://modellingdh.github.io/ont/odp/experience> .
 
-<http://modellingdh.github.io/ont/odp/experience> a owl:Ontology
-    ; owl:versionIRI <https://raw.githubusercontent.com/modellingDH/odp_experience/master/owl/cp_experience.owl.ttl>
-    ; owl:imports <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl>
-    ; dc:title "Experience from observation"@en
-    ; dc:creator <https://orcid.org/0000-0002-3639-3622> 
-        , <https://orcid.org/0000-0002-9272-908X>
-        , <https://orcid.org/0000-0003-3807-5019>
-    ; cp:relatedCPs <http://www.ontologydesignpatterns.org/cp/owl/observation.owl>
-        , <http://www.ontologydesignpatterns.org/cp/owl/persons.owl>
-        , <http://ontology.eil.utoronto.ca/icity/ActivitySpecification>
+<http://modellingdh.github.io/ont/odp/experience> rdf:type owl:Ontology ;
+                                                   owl:versionIRI <https://raw.githubusercontent.com/modellingDH/odp_experience/master/owl/cp_experience.owl.ttl> ;
+                                                   owl:imports <http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl> ;
+                                                   dc:creator <https://orcid.org/0000-0002-3639-3622> ,
+                                                              <https://orcid.org/0000-0002-9272-908X> ,
+                                                              <https://orcid.org/0000-0003-3807-5019> ;
+                                                   dc:title "Experience from observation"@en ;
+                                                   rdfs:comment "This content pattern accepts the notion of Activity as defined in the ActivitySpecification CP, but defines"@en ;
+                                                   cp:extractedFrom <https://raw.githubusercontent.com/eureadit/reading-experience-ontology/master/data-model-v2.owl> ;
+                                                   cp:hasComponent <http://ontology.eil.utoronto.ca/icity/ActivitySpecification> ;
+                                                   cp:hasIntent "to represent the epistemological \"missing link\" between a cognitive activity, e.g. the interaction with a cultural object, and any evidence of the effects this activity has on the individuals that are engaged with it; what can collectively be considered as an experience."@en ;
+                                                   cp:relatedCPs <http://ontology.eil.utoronto.ca/icity/ActivitySpecification> ,
+                                                                 <http://www.ontologydesignpatterns.org/cp/owl/observation.owl> ,
+                                                                 <http://www.ontologydesignpatterns.org/cp/owl/persons.owl> ,
+                                                                                                                            
+<http://ontologydesignpatterns.org/cp/owl/transition.owl>
+
 .
 
-:includes a owl:ObjectProperty
-    ; rdfs:label "includes"@en
-    ; rdfs:domain activ:Activity
-    ; rdfs:range :Observation
-.
 
-:produces a owl:ObjectProperty
-    ; rdfs:label "produces"@en
-    ; rdfs:domain :Prompt
-    ; rdfs:range :Observation
-.
+#################################################################
+#    Object Properties
+#################################################################
 
-:stateOf a owl:ObjectProperty
-    ; rdfs:label "state of"@en
-    ; rdfs:comment "See if another CP offers an agreeable property for state (situation?)"@en
-.
+:isEngagedIn rdf:type owl:ObjectProperty ;
+          rdfs:domain <http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person> ;
+          rdfs:range :Engagement ;
+          dc:description """Because an activity may engage other participants than the one performing it, engagements are in general considered individual rather than collective, therefore each participants has their own engagement and only some of them will be conscious and/or documented."""@en ;
+          rdfs:label "engaged in"@en .
 
-:stimulates a owl:ObjectProperty
-    ; rdfs:label "stimulates"@en
-    ; rdfs:domain :Observation
-    ; rdfs:range :Engagement
-.
 
-:Engagement a owl:Class
-    ; rdfs:label "Engagement"@en
-    ; rdfs:subClassOf [
-        a owl:Restriction
-        ; owl:onProperty :stateOf
-        ; owl:someValuesFrom <http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person>
-    ] , [
-        a owl:Restriction
-        ; owl:onProperty :stateOf
-        ; owl:someValuesFrom activ:Activity
-    ]
-.
+###  http://modellingdh.github.io/ont/odp/term/includes
+:includes rdf:type owl:ObjectProperty ;
+          rdfs:domain activ:Activity ;
+          rdfs:range :Observation ;
+          dc:description """A relation of mereological nature that connects a given observation with the activity that originates them: it strengthens the argument that observations are always active processes from a cognitive standpoint, regardless of how conscious they may be."""@en ;
+          rdfs:comment "A standard mereological property from another content pattern may be used in lieu of this one and therefore aligned with it."@en ;
+          rdfs:label "includes"@en .
 
-:Observation a owl:Class
-    ; rdfs:label "Observation"@en
-    ; rdfs:comment "Not necessarily the same observation as in the Observation CP."@en
-.
 
-:Prompt a owl:Class
-    ; rdfs:label "Prompt"@en
-    ; rdfs:subClassOf activ:Activity
-.
+###  http://modellingdh.github.io/ont/odp/term/produces
+:produces rdf:type owl:ObjectProperty ;
+          rdfs:domain :Prompt ;
+          rdfs:range :Observation ;
+          rdfs:label "produces"@en .
 
+
+###  http://modellingdh.github.io/ont/odp/term/stimulates
+:isReflectionOn rdf:type owl:ObjectProperty ;
+            rdfs:domain :Engagement ;
+            rdfs:range :Observation ;
+             dc:description """Used to connect the subjective elements of an experience with the corresponding observation, which is extrapolated from the content being interacted with and in itself may not be including a critique."""@en ;
+            rdfs:label "is reflection on"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://modellingdh.github.io/ont/odp/term/Engagement
+:Engagement rdf:type owl:Class ;
+            dc:description """The product of a reflection upon an observation, which embodies subjective traits of an experience (Example: "After reading this passage of 'To Kill a Mockingbird', I came to a clearer understanding of the many facets of social intolerance")."""@en ;
+            rdfs:label "Engagement"@en .
+
+
+###  http://modellingdh.github.io/ont/odp/term/Observation
+:Observation rdf:type owl:Class ;
+             dc:description """The product of an act of scrutiny which may or may not have been performed with a critical disposition (Example: "My thoughts from reading this passage of 'To Kill a Mockingbird'")."""@en ;
+             rdfs:comment "A disjointness or alignment between this class and <http://www.ontologydesignpatterns.org/cp/owl/observation.owl#Observation> in the Observation content pattern is plausible but subject to debate, hence will not be formalised herein."@en ;
+             rdfs:label "Observation"@en .
+
+
+###  http://modellingdh.github.io/ont/odp/term/Prompt
+:Prompt rdf:type owl:Class ;
+        dc:description """The stimulus within an activity that causes an observation."""@en ;
+        rdfs:label "Prompt"@en .
+
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Engagement
+                :Observation
+                activ:Activity
+                <http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person>
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
