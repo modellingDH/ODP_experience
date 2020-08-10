@@ -47,8 +47,9 @@ dc:title rdf:type owl:AnnotationProperty .
 #################################################################
 
 ###  http://modellingdh.github.io/ont/odp/term/includes
-:includes rdf:type owl:ObjectProperty ,
-                   owl:TransitiveProperty ;
+:includes rdf:type owl:ObjectProperty ;
+          owl:inverseOf :isIncludedIn ;
+          rdf:type owl:TransitiveProperty ;
           rdfs:domain activ:Activity ;
           rdfs:range :Observation ;
           dc:description "A relation of mereological nature that connects a given observation with the activity that originates them: it strengthens the argument that observations are always active processes from a cognitive standpoint, regardless of how conscious they may be."@en ;
@@ -64,6 +65,11 @@ dc:title rdf:type owl:AnnotationProperty .
              rdfs:label "engaged in"@en .
 
 
+###  http://modellingdh.github.io/ont/odp/term/isIncludedIn
+:isIncludedIn rdf:type owl:ObjectProperty ;
+              rdfs:label "is included in"@en .
+
+
 ###  http://modellingdh.github.io/ont/odp/term/isReflectionOn
 :isReflectionOn rdf:type owl:ObjectProperty ;
                 rdfs:domain :Engagement ;
@@ -73,7 +79,7 @@ dc:title rdf:type owl:AnnotationProperty .
                                          )
                            ] ;
                 owl:propertyChainAxiom ( :isReflectionOn
-                                         :includes
+                                         :isIncludedIn
                                        ) ;
                 dc:description "Used to connect the subjective elements of an experience with the corresponding observation, which is extrapolated from the content being interacted with and in itself may not be including a critique."@en ;
                 rdfs:label "is reflection on"@en .
