@@ -16,14 +16,45 @@
                                                    dc:creator <https://orcid.org/0000-0002-3639-3622> ,
                                                               <https://orcid.org/0000-0002-9272-908X> ,
                                                               <https://orcid.org/0000-0003-3807-5019> ;
-                                                   dc:title "Experience from observation"@en ;
+                                                   dc:title "Experience & observation"@en ;
+                                                   cp:coversRequirements "In what ways can one person be engaged in a single activity?"@en ,
+                                                                         "What personal observations were produced by reflecting upon an activity being carried out?"@en ,
+                                                                         "Which activities performed by someone have prompted an observation from that person and which haven't?"@en ;
                                                    cp:extractedFrom <https://raw.githubusercontent.com/eureadit/reading-experience-ontology/master/data-model-v2.owl> ;
                                                    cp:hasComponent <http://ontology.eil.utoronto.ca/icity/ActivitySpecification> ;
+                                                   cp:hasConsequences "It decomposes the lax notion of experience (e.g. through engaging in reading a book or incidentally hearing some music) into distinguishable elements that can be used in e.g. text annotation with greater precision than with a single named entity representing the experience."@en ;
                                                    cp:hasIntent "to represent the epistemological \"missing link\" between a cognitive activity, e.g. the interaction with a cultural object, and any evidence of the effects this activity has on the individuals that are engaged with it; what can collectively be considered as an experience."@en ;
+                                                   cp:hasUnitTest """PREFIX : <http://modellingdh.github.io/ont/odp/term/>
+PREFIX activ: <http://ontology.eil.utoronto.ca/icity/ActivitySpecification/>
+SELECT DISTINCT ?activity WHERE {
+   { ?activity a :Prompt } 
+   UNION
+   { ?activity a activ:Activity ; :produced [ ] }
+}"""@en ,
+                                                                  """PREFIX : <http://modellingdh.github.io/ont/odp/term/>
+PREFIX activ: <http://ontology.eil.utoronto.ca/icity/ActivitySpecification/>
+SELECT DISTINCT ?observation WHERE {
+   ?activity a activ:Activity
+      ; :includes ?observation 
+   . ?observation a :Observation
+}"""@en ,
+                                                                  """PREFIX : <http://modellingdh.github.io/ont/odp/term/>
+SELECT DISTINCT ?engagement ?activity WHERE {
+   ?engagement :onActivity ?activity
+}"""@en ;
                                                    cp:relatedCPs <http://ontology.eil.utoronto.ca/icity/ActivitySpecification> ,
                                                                  <http://ontologydesignpatterns.org/cp/owl/transition.owl> ,
                                                                  <http://www.ontologydesignpatterns.org/cp/owl/observation.owl> ,
                                                                  <http://www.ontologydesignpatterns.org/cp/owl/persons.owl> ;
+                                                   cp:scenarios """Charles Dickens wrote in his report on visiting a village near Carrara, Italy: \"It contains a beautiful little Theatre, newly built; and it is an interesting custom there, to form the chorus of labourers in the marble quarries, who are self-taught and sing by ear. I heard them in a comic opera, and in an act of “Norma;” and they acquitted themselves very well; unlike the common people of Italy generally, who (with some exceptions among the Neapolitans) sing vilely out of tune, and have very disagreeable singing voices.\"
+
+https://led.kmi.open.ac.uk/entity/lexp/1382364120
+
+This passage describes:
+- the setting of an activity (description of the Theatre, interest in the village custom)
+- the activity (Dickens listening to the marble quarry labourers sing Norma)
+- observation on the activities themselves (critique on the chorus' singing performance)
+- observation on his engagement in that and prior activities (it was unlike what most Italians he had heard sing)"""@en ;
                                                    rdfs:comment "This content pattern accepts the notion of Activity as defined in the ActivitySpecification CP, but defines"@en .
 
 #################################################################
@@ -46,6 +77,13 @@ dc:title rdf:type owl:AnnotationProperty .
 #    Object Properties
 #################################################################
 
+###  http://modellingdh.github.io/ont/odp/term/hasEngagement
+:hasEngagement rdf:type owl:ObjectProperty ;
+               owl:inverseOf :onActivity ;
+               rdfs:range :Engagement ;
+               rdfs:label "has engagement"@en .
+
+
 ###  http://modellingdh.github.io/ont/odp/term/includes
 :includes rdf:type owl:ObjectProperty ;
           rdfs:domain activ:Activity ;
@@ -63,6 +101,12 @@ dc:title rdf:type owl:AnnotationProperty .
              rdfs:label "engaged in"@en .
 
 
+###  http://modellingdh.github.io/ont/odp/term/isReflectedUponIn
+:isReflectedUponIn rdf:type owl:ObjectProperty ;
+                   owl:inverseOf :isReflectionOn ;
+                   rdfs:label "is reflected upon in"@en .
+
+
 ###  http://modellingdh.github.io/ont/odp/term/isReflectionOn
 :isReflectionOn rdf:type owl:ObjectProperty ;
                 rdfs:domain :Observation ;
@@ -74,13 +118,19 @@ dc:title rdf:type owl:AnnotationProperty .
 ###  http://modellingdh.github.io/ont/odp/term/onActivity
 :onActivity rdf:type owl:ObjectProperty ;
             rdfs:domain :Engagement ;
-            rdfs:range activ:Activity .
+            rdfs:range activ:Activity ;
+            dc:description "what activity/ies are affecting or affected by a certain engagement"@en ;
+            rdfs:label "on activity"@en .
 
 
-###  http://modellingdh.github.io/ont/odp/term/produces
-:produces rdf:type owl:ObjectProperty ;
-          rdfs:range :Observation ;
-          rdfs:label "produces"@en .
+###  http://modellingdh.github.io/ont/odp/term/producedObservation
+:producedObservation rdf:type owl:ObjectProperty ;
+                     rdfs:range :Observation ;
+                     owl:propertyChainAxiom ( :hasEngagement
+                                              :isReflectedUponIn
+                                            ) ;
+                     dc:description "This property can be used to denote that something is (even indirectly, not necessary through direct reflection) responsible for the existence of an observation."@en ;
+                     rdfs:label "produced observation"@en .
 
 
 #################################################################
@@ -104,7 +154,7 @@ dc:title rdf:type owl:AnnotationProperty .
 :Prompt rdf:type owl:Class ;
         owl:equivalentClass [ owl:intersectionOf ( activ:Activity
                                                    [ rdf:type owl:Restriction ;
-                                                     owl:onProperty :produces ;
+                                                     owl:onProperty :producedObservation ;
                                                      owl:someValuesFrom :Observation
                                                    ]
                                                  ) ;
