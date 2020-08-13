@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://modellingdh.github.io/ont/odp/term/"
+     xml:base="http://modellingdh.github.io/ont/odp/term/"
+     xmlns:cp="http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl#"
+     xmlns:dc="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:activ="http://ontology.eil.utoronto.ca/icity/ActivitySpecification/"
+     xmlns:provo="http://www.w3.org/ns/prov#">
+    <owl:Ontology rdf:about="http://modellingdh.github.io/ont/odp/experience">
+        <owl:versionIRI rdf:resource="https://raw.githubusercontent.com/modellingDH/odp_experience/master/owl/cp_experience.owl.ttl"/>
+        <owl:imports rdf:resource="http://www.ontologydesignpatterns.org/schemas/cpannotationschema.owl"/>
+        <dc:creator rdf:resource="https://orcid.org/0000-0002-3639-3622"/>
+        <dc:creator rdf:resource="https://orcid.org/0000-0002-9272-908X"/>
+        <dc:creator rdf:resource="https://orcid.org/0000-0003-3807-5019"/>
+        <dc:title xml:lang="en">Experience &amp; observation</dc:title>
+        <cp:coversRequirements xml:lang="en">In what ways can one person be engaged in a single activity?</cp:coversRequirements>
+        <cp:coversRequirements xml:lang="en">What personal observations were produced by reflecting upon an activity being carried out?</cp:coversRequirements>
+        <cp:coversRequirements xml:lang="en">Which activities performed by someone have prompted an observation from that person and which haven&apos;t?</cp:coversRequirements>
+        <cp:extractedFrom rdf:resource="https://raw.githubusercontent.com/eureadit/reading-experience-ontology/master/data-model-v2.owl"/>
+        <cp:hasComponent rdf:resource="http://ontology.eil.utoronto.ca/icity/ActivitySpecification"/>
+        <cp:hasConsequences xml:lang="en">It decomposes the lax notion of experience (e.g. through engaging in reading a book or incidentally hearing some music) into distinguishable elements that can be used in e.g. text annotation with greater precision than with a single named entity representing the experience.</cp:hasConsequences>
+        <cp:hasIntent xml:lang="en">to represent the epistemological &quot;missing link&quot; between a cognitive activity, e.g. the interaction with a cultural object, and any evidence of the effects this activity has on the individuals that are engaged with it; what can collectively be considered as an experience.</cp:hasIntent>
+        <cp:hasUnitTest xml:lang="en">PREFIX : &lt;http://modellingdh.github.io/ont/odp/term/&gt;
+PREFIX activ: &lt;http://ontology.eil.utoronto.ca/icity/ActivitySpecification/&gt;
+SELECT DISTINCT ?activity WHERE {
+   { ?activity a :Prompt } 
+   UNION
+   { ?activity a activ:Activity ; :produced [ ] }
+}</cp:hasUnitTest>
+        <cp:hasUnitTest xml:lang="en">PREFIX : &lt;http://modellingdh.github.io/ont/odp/term/&gt;
+PREFIX activ: &lt;http://ontology.eil.utoronto.ca/icity/ActivitySpecification/&gt;
+SELECT DISTINCT ?observation WHERE {
+   ?activity a activ:Activity
+      ; :includes ?observation 
+   . ?observation a :Observation
+}</cp:hasUnitTest>
+        <cp:hasUnitTest xml:lang="en">PREFIX : &lt;http://modellingdh.github.io/ont/odp/term/&gt;
+SELECT DISTINCT ?engagement ?activity WHERE {
+   ?engagement :onActivity ?activity
+}</cp:hasUnitTest>
+        <cp:relatedCPs rdf:resource="http://ontology.eil.utoronto.ca/icity/ActivitySpecification"/>
+        <cp:relatedCPs rdf:resource="http://ontologydesignpatterns.org/cp/owl/transition.owl"/>
+        <cp:relatedCPs rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/observation.owl"/>
+        <cp:relatedCPs rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/persons.owl"/>
+        <cp:scenarios xml:lang="en">Charles Dickens wrote in his report on visiting a village near Carrara, Italy: &quot;It contains a beautiful little Theatre, newly built; and it is an interesting custom there, to form the chorus of labourers in the marble quarries, who are self-taught and sing by ear. I heard them in a comic opera, and in an act of “Norma;” and they acquitted themselves very well; unlike the common people of Italy generally, who (with some exceptions among the Neapolitans) sing vilely out of tune, and have very disagreeable singing voices.&quot;
+
+https://led.kmi.open.ac.uk/entity/lexp/1382364120
+
+This passage describes:
+- the setting of an activity (description of the Theatre, interest in the village custom)
+- the activity (Dickens listening to the marble quarry labourers sing Norma)
+- observation on the activities themselves (critique on the chorus&apos; singing performance)
+- observation on his engagement in that and prior activities (it was unlike what most Italians he had heard sing)</cp:scenarios>
+        <rdfs:comment xml:lang="en">This content pattern accepts the notion of Activity as defined in the ActivitySpecification CP, but defines</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/description"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/hasEngagement -->
+
+    <owl:ObjectProperty rdf:about="http://modellingdh.github.io/ont/odp/term/hasEngagement">
+        <owl:inverseOf rdf:resource="http://modellingdh.github.io/ont/odp/term/inActivity"/>
+        <rdfs:range rdf:resource="http://modellingdh.github.io/ont/odp/term/Engagement"/>
+        <rdfs:label xml:lang="en">has engagement</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/inActivity -->
+
+    <owl:ObjectProperty rdf:about="http://modellingdh.github.io/ont/odp/term/inActivity">
+        <rdfs:domain rdf:resource="http://modellingdh.github.io/ont/odp/term/Engagement"/>
+        <rdfs:range rdf:resource="http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity"/>
+        <dc:description xml:lang="en">what activity/ies are affecting or affected by a certain engagement</dc:description>
+        <rdfs:label xml:lang="en">in activity</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/includes -->
+
+    <owl:ObjectProperty rdf:about="http://modellingdh.github.io/ont/odp/term/includes">
+        <rdfs:domain rdf:resource="http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity"/>
+        <rdfs:range rdf:resource="http://modellingdh.github.io/ont/odp/term/Observation"/>
+        <dc:description xml:lang="en">A relation of mereological nature that connects a given observation with the activity that originates them: it strengthens the argument that observations are always active processes from a cognitive standpoint, regardless of how conscious they may be.</dc:description>
+        <rdfs:comment xml:lang="en">A standard mereological property from another content pattern may be used in lieu of this one and therefore aligned with it.</rdfs:comment>
+        <rdfs:label xml:lang="en">includes</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/isEngagedIn -->
+
+    <owl:ObjectProperty rdf:about="http://modellingdh.github.io/ont/odp/term/isEngagedIn">
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person"/>
+        <rdfs:range rdf:resource="http://modellingdh.github.io/ont/odp/term/Engagement"/>
+        <dc:description xml:lang="en">Because an activity may engage other participants than the one performing it, engagements are in general considered individual rather than collective, therefore each participants has their own engagement and only some of them will be conscious and/or documented.</dc:description>
+        <rdfs:label xml:lang="en">engaged in</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/isReflectedUponIn -->
+
+    <owl:ObjectProperty rdf:about="http://modellingdh.github.io/ont/odp/term/isReflectedUponIn">
+        <owl:inverseOf rdf:resource="http://modellingdh.github.io/ont/odp/term/isReflectionOn"/>
+        <rdfs:label xml:lang="en">is reflected upon in</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/isReflectionOn -->
+
+    <owl:ObjectProperty rdf:about="http://modellingdh.github.io/ont/odp/term/isReflectionOn">
+        <rdfs:domain rdf:resource="http://modellingdh.github.io/ont/odp/term/Observation"/>
+        <rdfs:range rdf:resource="http://modellingdh.github.io/ont/odp/term/Engagement"/>
+        <dc:description xml:lang="en">Used to connect the subjective elements of an experience with the corresponding observation, which is extrapolated from the content being interacted with and in itself may not be including a critique.</dc:description>
+        <rdfs:label xml:lang="en">is reflection on</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/producedObservation -->
+
+    <owl:ObjectProperty rdf:about="http://modellingdh.github.io/ont/odp/term/producedObservation">
+        <rdfs:range rdf:resource="http://modellingdh.github.io/ont/odp/term/Observation"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://modellingdh.github.io/ont/odp/term/hasEngagement"/>
+            <rdf:Description rdf:about="http://modellingdh.github.io/ont/odp/term/isReflectedUponIn"/>
+        </owl:propertyChainAxiom>
+        <dc:description xml:lang="en">This property can be used to denote that something is (even indirectly, not necessary through direct reflection) responsible for the existence of an observation.</dc:description>
+        <rdfs:label xml:lang="en">produced observation</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/Engagement -->
+
+    <owl:Class rdf:about="http://modellingdh.github.io/ont/odp/term/Engagement">
+        <dc:description xml:lang="en">The product of a reflection upon an observation, which embodies subjective traits of an experience (Example: &quot;After reading this passage of &apos;To Kill a Mockingbird&apos;, I came to a clearer understanding of the many facets of social intolerance&quot;).</dc:description>
+        <rdfs:label xml:lang="en">Engagement</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/Observation -->
+
+    <owl:Class rdf:about="http://modellingdh.github.io/ont/odp/term/Observation">
+        <dc:description xml:lang="en">The product of an act of scrutiny which may or may not have been performed with a critical disposition (Example: &quot;My thoughts from reading this passage of &apos;To Kill a Mockingbird&apos;&quot;).</dc:description>
+        <rdfs:comment xml:lang="en">A disjointness or alignment between this class and &lt;http://www.ontologydesignpatterns.org/cp/owl/observation.owl#Observation&gt; in the Observation content pattern is plausible but subject to debate, hence will not be formalised herein.</rdfs:comment>
+        <rdfs:label xml:lang="en">Observation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://modellingdh.github.io/ont/odp/term/Prompt -->
+
+    <owl:Class rdf:about="http://modellingdh.github.io/ont/odp/term/Prompt">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://modellingdh.github.io/ont/odp/term/producedObservation"/>
+                        <owl:someValuesFrom rdf:resource="http://modellingdh.github.io/ont/odp/term/Observation"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity"/>
+        <dc:description xml:lang="en">The stimulus within an activity that causes an observation.</dc:description>
+        <rdfs:label xml:lang="en">Prompt</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity -->
+
+    <owl:Class rdf:about="http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://modellingdh.github.io/ont/odp/term/Engagement"/>
+            <rdf:Description rdf:about="http://modellingdh.github.io/ont/odp/term/Observation"/>
+            <rdf:Description rdf:about="http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity"/>
+            <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/cp/owl/persons.owl#Person"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
