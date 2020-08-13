@@ -79,9 +79,17 @@ dc:title rdf:type owl:AnnotationProperty .
 
 ###  http://modellingdh.github.io/ont/odp/term/hasEngagement
 :hasEngagement rdf:type owl:ObjectProperty ;
-               owl:inverseOf :onActivity ;
+               owl:inverseOf :inActivity ;
                rdfs:range :Engagement ;
                rdfs:label "has engagement"@en .
+
+
+###  http://modellingdh.github.io/ont/odp/term/inActivity
+:inActivity rdf:type owl:ObjectProperty ;
+            rdfs:domain :Engagement ;
+            rdfs:range activ:Activity ;
+            dc:description "what activity/ies are affecting or affected by a certain engagement"@en ;
+            rdfs:label "in activity"@en .
 
 
 ###  http://modellingdh.github.io/ont/odp/term/includes
@@ -113,14 +121,6 @@ dc:title rdf:type owl:AnnotationProperty .
                 rdfs:range :Engagement ;
                 dc:description "Used to connect the subjective elements of an experience with the corresponding observation, which is extrapolated from the content being interacted with and in itself may not be including a critique."@en ;
                 rdfs:label "is reflection on"@en .
-
-
-###  http://modellingdh.github.io/ont/odp/term/onActivity
-:onActivity rdf:type owl:ObjectProperty ;
-            rdfs:domain :Engagement ;
-            rdfs:range activ:Activity ;
-            dc:description "what activity/ies are affecting or affected by a certain engagement"@en ;
-            rdfs:label "on activity"@en .
 
 
 ###  http://modellingdh.github.io/ont/odp/term/producedObservation
