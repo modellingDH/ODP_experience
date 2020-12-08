@@ -27,7 +27,7 @@
                                                    cp:hasUnitTest """PREFIX : <http://modellingdh.github.io/ont/odp/term/>
 PREFIX activ: <http://ontology.eil.utoronto.ca/icity/ActivitySpecification/>
 SELECT DISTINCT ?activity WHERE {
-   { ?activity a :Prompt } 
+   { ?activity a :Prompting }
    UNION
    { ?activity a activ:Activity ; :produced [ ] }
 }"""@en ,
@@ -35,7 +35,7 @@ SELECT DISTINCT ?activity WHERE {
 PREFIX activ: <http://ontology.eil.utoronto.ca/icity/ActivitySpecification/>
 SELECT DISTINCT ?observation WHERE {
    ?activity a activ:Activity
-      ; :includes ?observation 
+      ; :includes ?observation
    . ?observation a :Observation
 }"""@en ,
                                                                   """PREFIX : <http://modellingdh.github.io/ont/odp/term/>
@@ -151,7 +151,7 @@ dc:title rdf:type owl:AnnotationProperty .
 
 
 ###  http://modellingdh.github.io/ont/odp/term/Prompt
-:Prompt rdf:type owl:Class ;
+:Prompting rdf:type owl:Class ;
         owl:equivalentClass [ owl:intersectionOf ( activ:Activity
                                                    [ rdf:type owl:Restriction ;
                                                      owl:onProperty :producedObservation ;
@@ -161,8 +161,8 @@ dc:title rdf:type owl:AnnotationProperty .
                               rdf:type owl:Class
                             ] ;
         rdfs:subClassOf activ:Activity ;
-        dc:description "The stimulus within an activity that causes an observation."@en ;
-        rdfs:label "Prompt"@en .
+        dc:description "An activity aimed to the generation of an observation."@en ;
+        rdfs:label "Prompting"@en .
 
 
 ###  http://ontology.eil.utoronto.ca/icity/ActivitySpecification/Activity
