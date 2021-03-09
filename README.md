@@ -1,4 +1,4 @@
-# Ontology Design Patter - Experience & Observation
+# Ontology Design Pattern - Experience & Observation
 Formalisation of the ontology design pattern for representing experience through observation
 
 Documentation on the [submission page](http://ontologydesignpatterns.org/wiki/Submissions:Experience_%26_Observation) to the Ontology Design Pattern repository.
