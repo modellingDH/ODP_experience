@@ -1,0 +1,50 @@
+@prefix : <http://modellingdh.github.io/ont/odp/experience/examples/thing/> .
+@prefix act: <http://ontology.eil.utoronto.ca/icity/Activity/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix mdh: <http://modellingdh.github.io/ont/odp/term/> .
+@prefix mo: <http://purl.org/ontology/mo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://modellingdh.github.io/ont/odp/experience/examples/concert> a owl:Ontology
+	; owl:imports <https://raw.githubusercontent.com/modellingDH/odp_experience/master/owl/cp_experience.owl.rdfxml>
+		, <http://ontology.eil.utoronto.ca/icity/Activity/>
+	; dc:creator <https://orcid.org/0000-0002-3639-3622> , <https://orcid.org/0000-0002-9272-908X> , <https://orcid.org/0000-0003-3807-5019>
+	; dc:title "Experience & Observation ontology design pattern example: Concert attendance"
+	; dc:description "This is an example of Reflection configuration, where an engagement gives rise to multiple observations. See http://www.semantic-web-journal.net/system/files/swj2948.pdf"@en
+	; rdfs:comment "This example complements a record from the Listening Experience Database, https://led.kmi.open.ac.uk/"@en
+	; rdfs:seeAlso "http://data.open.ac.uk/led/lexp/1424519819815"^^xsd:anyURI , "https://led.kmi.open.ac.uk/entity/lexp/1424519819815"^^xsd:anyURI
+.
+
+:activity_concert_attendance a act:Activity
+	; rdfs:label "Anita Gabrielle Tedder attended Ella Fitzgerald's performance at the Southbank Centre"@en
+	; act:hasParticipant <http://data.open.ac.uk/led/person/anonymous/1411565604188>
+.
+
+<https://data.open.ac.uk/page/led/performance/http:/data.open.ac.uk/led/music/popular%20song/1424519788944/1424519788956> a mo:Performance
+	; rdfs:label "Ella Fitzgerald played 'popular song' at Southbank Centre"@en
+	; act:enables :activity_concert_attendance
+.
+
+<http://data.open.ac.uk/led/person/anonymous/1411565604188> a foaf:Person
+	; rdfs:label "Anita Gabrielle Tedder"
+	; mdh:isEngagedIn :activity_concert_attendance_e1
+.
+
+:activity_concert_attendance_e1 a mdh:Engagement
+	; rdfs:label "Emotional engagement of 'Anita Gabrielle Tedder attended Ella Fitzgerald's performance at the Southbank Centre'"@en
+.
+
+:activity_concert_attendance_o1 a mdh:Observation
+	; rdfs:label "We were, I have to say, not only shocked, but highly embarrassed to find there were fewer than a couple of hundred people scattered out across the entire auditorium. What on earth had happened? Who knows!"@en
+	; rdfs:comment "The participant's observation on the performance attendance has an emotional disposition, though based on an objective critique on the numbers."@en
+	; mdh:isReflectionOn :activity_concert_attendance_e1
+.
+
+:activity_concert_attendance_o2 a mdh:Observation
+	; rdfs:label "She invited us all to come down close to the stage, and then proceeded to treat us to a sensationally memorable performance. What a star! Terrific!"@en
+	; rdfs:comment "The participant's observation on the performance itself has an emotional disposition."@en
+	; mdh:isReflectionOn :activity_concert_attendance_e1
+.
